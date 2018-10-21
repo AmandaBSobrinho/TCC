@@ -6,6 +6,7 @@ import normality_test
 import confidence_interval
 import pareto
 import json
+import os
 
 
 def main():
@@ -26,16 +27,16 @@ def main():
         atrib_freq = pareto.pareto(atributo, valores)
         print('Valores mais frequentes de ' + atributo + ': ' + ', '.join(str(valor) for valor in atrib_freq))
 
-        saida_json[atributo] = {}
-        saida_json[atributo].update({"valor": atrib_freq})
+        saida_json[atributo] = {}  # Criação do dicionário do atributo
+        saida_json[atributo].update({"valor": atrib_freq})  # Atualiza o dicionário com um novo atributo e seu valor
 
     # Para os atributos quantitativos, é preciso fazer o histograma e detectar picos
     for atributo, valores in quantitativos.items():
         histogramas = peak_detection.peak_detection(atributo, valores)
         print('\n' + atributo + ': ' + str(histogramas) + '\n')
 
-        saida_json[atributo] = {}
-        cont = 1
+        saida_json[atributo] = {}  # Criação do dicionário do atributo
+        cont = 1  # Contador para escrever as chaves min e max consecutivamente
 
         for histograma in histogramas:
 
@@ -55,9 +56,13 @@ def main():
             min_quantile, max_quantile = confidence_interval.calculate(saida_normalizada)
             print('Intervalo de confiança de ' + atributo + ': ' + str(min_quantile) + ' - ' + str(max_quantile))
 
-            saida_json[atributo].update({"min{}".format(cont): min_quantile, "max{}".format(cont): max_quantile})
+            # Atualiza a chave atributo com um novo par de valores min e max
+            saida_json[atributo].update({'min{}'.format(cont): min_quantile, 'max{}'.format(cont): max_quantile})
             cont = cont + 1
 
+    # Se o arquivo já existe, apaga e cria outro
+    if os.path.exists('valores.json'):
+        os.remove('valores.json')
     with open('valores.json', 'a') as arquivo:
         json.dump(saida_json, arquivo, indent=4)
 
