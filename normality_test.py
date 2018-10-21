@@ -14,7 +14,7 @@ def normality(data):
             # print('%.3f: %.3f, dados parecem normais (falha em rejeitar H0)' % (sl, cv))
         else:
             normal.append(0)
-            # print('%.3f: %.3f, dados nao parecem normais (rejeitam H0)' % (sl, cv))
+            # print('%.3f: %.3f, dados não parecem normais (rejeitam H0)' % (sl, cv))
 
     if normal.count(1) >= 3:
         return 1
