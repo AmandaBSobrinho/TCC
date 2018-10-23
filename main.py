@@ -12,7 +12,7 @@ from shutil import copy2
 
 
 def main():
-    sig_path = input("Caminho (com barra no final): ")
+    sig_path = input("Caminho das assinaturas (com barra no final): ")
     # sig_path = '/home/amanda/PycharmProjects/TCC/Signatures/'
     qualitativos, quantitativos = read_signature.atribute_types(sig_path)
     print('Qualitativos: ' + str(qualitativos))
@@ -77,8 +77,9 @@ def main():
     # Pega todas as assinaturas dentro da pasta
     files = [os.path.join(sig_path, f) for f in os.listdir(sig_path) if os.path.isfile(os.path.join(sig_path, f))]
 
-    # Verifica se a pasta Classified_Signatures existe; senão, cria
-    class_signatures_path = os.getcwd() + '/Classified_Signatures/'
+    # Pede o nome da pasta em que as assinaturas classificadas vão ficar
+    class_signatures_name = input('\nNome da pasta das Assinaturas Classificadas: ')
+    class_signatures_path = os.getcwd() + '/' + class_signatures_name + '/'
     if not os.path.exists(class_signatures_path):  # Se a pasta não existe, criar
         os.makedirs(class_signatures_path)
 
@@ -115,14 +116,14 @@ def main():
                 # Copiar para aquela pasta
                 # Criar pasta, se ela não existe
                 directory = class_signatures_path + str(i[0]) + '-' + str(i[1]) + '/'
-                if not os.path.exists(directory):  # Se a pasta nao existe, criar
+                if not os.path.exists(directory):  # Se a pasta não existe, criar
                     os.makedirs(directory)
                 copy2(file, directory + os.path.relpath(file, sig_path))
 
             # Caso a classificação seja zero
             if sig_class == 0:
                 directory = class_signatures_path + '0/'
-                if not os.path.exists(directory):  # Se a pasta nao existe, criar
+                if not os.path.exists(directory):  # Se a pasta não existe, criar
                     os.makedirs(directory)
                 copy2(file, directory + os.path.relpath(file, sig_path))
 
