@@ -7,7 +7,10 @@ def bootstrap(titulo, data):
     new_bootstrap = pd.DataFrame({'valores': [df.sample(400, replace=True).entradas.mean() for i in range(1000)]})
 
     new_bootstrap.valores.hist(histtype='step', grid=0)
-    plt.axvline(df.entradas.mean(), color='C1')
+    plt.axvline(df.entradas.mean(), color='C3')
+    plt.axvline(new_bootstrap.valores.mean(), color='C2')
+    plt.axvline(new_bootstrap.valores.quantile(0.025), color='C1')
+    plt.axvline(new_bootstrap.valores.quantile(0.975),color='C1')
     plt.title(titulo + ' Bootstrapped')
     plt.xlabel('Valores')
     plt.ylabel('Contagem')

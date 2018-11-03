@@ -11,7 +11,7 @@ def peak_detection(titulo, data):
     mostfreq = freq.most_common()
 
     df = pd.DataFrame(data, columns=['valores'])
-    df.hist(histtype='step', grid=0)
+    df.hist(histtype='step', grid=0, bins=14)
     plt.title(titulo)
     plt.xlabel('Valores')
     plt.ylabel('Contagem')

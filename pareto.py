@@ -31,7 +31,7 @@ def pareto(titulo, data):
 
     # Criação do gráfico de Pareto
     # Gráfico de barras
-    ax = df.groupby(['valores']).median().sort_values("freq", ascending=False).plot(kind='bar', legend=False, width=0.7)
+    ax = df.groupby(['valores']).median().sort_values("freq", ascending=False).plot(kind='bar', legend=False, width=0.1)
     plt.xlabel('Valores')
     plt.ylabel('Frequências')
 
